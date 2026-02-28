@@ -3,6 +3,8 @@
 > CS 4063 Natural Language Processing — Assignment 2
 > A fully local, production-style conversational AI system.
 
+![PharmaChat Demo](screenshots/demo.png)
+
 ---
 
 ## Architecture
