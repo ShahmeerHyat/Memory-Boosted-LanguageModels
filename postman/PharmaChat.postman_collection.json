@@ -1,0 +1,64 @@
+{
+  "info": {
+    "name": "PharmaChat API",
+    "description": "API test collection for PharmaChat — MediPlus Pharmacy Information Assistant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health",
+        "description": "Check if the API and LLM engine are online"
+      }
+    },
+    {
+      "name": "Create New Session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var json = pm.response.json();",
+              "pm.environment.set('session_id', json.session_id);",
+              "pm.test('Session ID returned', () => pm.expect(json.session_id).to.be.a('string'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/session/new",
+        "description": "Creates a new conversation session, saves session_id to environment"
+      }
+    },
+    {
+      "name": "Get Session Stats",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/session/{{session_id}}/stats",
+        "description": "Returns turn count and context window stats for the session"
+      }
+    },
+    {
+      "name": "Get Session History",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/session/{{session_id}}/history",
+        "description": "Returns full message history for the session"
+      }
+    },
+    {
+      "name": "Reset Session",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/session/{{session_id}}",
+        "description": "Clears all history for the given session ID"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" }
+  ]
+}
